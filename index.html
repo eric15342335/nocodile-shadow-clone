@@ -1,0 +1,124 @@
+<!doctype html>
+<html
+  lang="en"
+  class="wa-light wa-brand-orange wa-neutral-gray wa-success-green wa-warning-yellow wa-danger-red"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f8fafc" />
+    <title>Train your clone sign | Nocodile</title>
+  </head>
+  <body>
+    <main class="trainer" id="collect">
+      <header class="intro">
+        <h1>Train your <span>clone sign.</span></h1>
+      </header>
+      <p id="boot-status" class="status-line" role="status" data-auto-hide hidden></p>
+      <section id="sync-warning" class="sync-warning" aria-labelledby="sync-warning-title" hidden>
+        <div>
+          <h2 id="sync-warning-title">Saved work changed</h2>
+          <p id="sync-status" role="alert"></p>
+        </div>
+        <wa-button id="btn-reload-state" variant="warning">Reload</wa-button>
+      </section>
+
+      <div class="workspace">
+        <section class="camera-panel" aria-labelledby="camera-title">
+          <div class="section-heading"><h2 id="camera-title">Camera</h2></div>
+          <div class="viewfinder">
+            <video id="trainer-video" autoplay playsinline muted></video>
+            <canvas
+              id="trainer-canvas"
+              width="640"
+              height="480"
+              aria-label="Camera preview with hand tracking and shadow clones"
+            ></canvas>
+            <span id="viewfinder-note">Camera is off</span>
+            <span id="rec-badge" hidden>Recording</span>
+            <div class="video-overlay-badge" aria-hidden="true">
+              <img id="effect-overlay" src="assets/state-1.png" data-state="1" alt="" />
+            </div>
+          </div>
+          <div class="camera-controls">
+            <wa-button id="btn-camera" variant="neutral" appearance="filled"
+              >Start camera</wa-button
+            >
+            <wa-button id="btn-stop-camera" appearance="outlined" disabled>Stop camera</wa-button>
+          </div>
+          <p id="camera-status" class="status-line" role="status" data-auto-hide hidden></p>
+        </section>
+
+        <aside class="side-panel">
+          <section id="training-controls" class="mode-controls" aria-labelledby="training-title">
+            <div class="section-heading"><h2 id="training-title">Examples</h2></div>
+            <div class="sample-grid">
+              <article class="sample-class positive">
+                <h3>Clone sign</h3>
+                <p class="counts"><strong id="count-clone">0 clips</strong></p>
+                <wa-button id="btn-rec-clone" variant="brand">Record</wa-button>
+                <wa-button id="btn-remove-clone" appearance="plain" size="small" disabled
+                  >Remove last</wa-button
+                >
+              </article>
+              <article class="sample-class negative">
+                <h3>Not clone sign</h3>
+                <p class="counts"><strong id="count-other">0 clips</strong></p>
+                <wa-button id="btn-rec-other" variant="neutral" appearance="outlined"
+                  >Record</wa-button
+                >
+                <wa-button id="btn-remove-other" appearance="plain" size="small" disabled
+                  >Remove last</wa-button
+                >
+              </article>
+            </div>
+            <p id="collection-status" class="status-line" role="status" data-auto-hide hidden></p>
+            <div class="training-actions">
+              <div id="training-primary-actions" class="training-primary-actions">
+                <wa-button id="btn-train" variant="brand" disabled>Train model</wa-button>
+                <wa-button id="btn-start-over" variant="danger" appearance="outlined"
+                  >Start over</wa-button
+                >
+              </div>
+              <wa-button id="btn-cancel-clip" appearance="plain" hidden>Cancel recording</wa-button>
+              <wa-button id="btn-save-retry" size="small" hidden>Retry save</wa-button>
+              <wa-button id="btn-cancel-train" appearance="plain" hidden>Cancel training</wa-button>
+              <wa-progress-bar
+                id="training-progress"
+                value="0"
+                label="Training progress"
+              ></wa-progress-bar>
+              <p id="train-status" class="status-line" role="status" data-auto-hide hidden></p>
+            </div>
+          </section>
+
+          <section
+            id="trained-controls"
+            class="mode-controls practice"
+            aria-labelledby="practice-title"
+            hidden
+          >
+            <div class="score-heading">
+              <h2 id="practice-title">Clone-sign score</h2>
+              <output id="conf-label" aria-label="Clone-sign score">N/A</output>
+            </div>
+            <wa-progress-bar id="confidence" value="0" label="Clone-sign score"></wa-progress-bar>
+            <div id="trained-actions" class="trained-actions">
+              <wa-button id="effect-reset" variant="warning" hidden>Reset effect</wa-button>
+              <wa-button id="btn-edit-examples" appearance="outlined">Edit examples</wa-button>
+            </div>
+            <p id="practice-status" class="status-line" role="status" data-auto-hide hidden></p>
+          </section>
+        </aside>
+      </div>
+    </main>
+
+    <wa-dialog id="start-over-dialog" label="Start over" with-footer>
+      <p>This clears Nocodile examples and model files saved by this site.</p>
+      <wa-button id="btn-keep-work" slot="footer" appearance="outlined">Keep work</wa-button>
+      <wa-button id="btn-confirm-start-over" slot="footer" variant="danger">Clear work</wa-button>
+    </wa-dialog>
+
+    <script type="module" src="/src/trainer.ts"></script>
+  </body>
+</html>

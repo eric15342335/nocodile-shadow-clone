@@ -1,0 +1,28 @@
+# Dependencies and generated output
+node_modules/
+dist/
+out/
+coverage/
+public/vendor/
+*.tsbuildinfo
+
+# Browser/test artifacts
+playwright-report/
+test-results/
+blob-report/
+traces/
+
+# Local environment and secrets
+.env
+.env.local
+.env.*.local
+
+# Local tooling/runtime noise
+.DS_Store
+.idea/
+*.log
+*.pid
+downloads/
+
+# Local reference checkout used during development
+reference/
