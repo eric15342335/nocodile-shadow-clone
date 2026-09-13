@@ -1,4 +1,5 @@
 import { SelfieSegmentation } from "@mediapipe/selfie_segmentation";
+import { publicUrl } from "./public-url";
 
 const SMOKE_FOLDERS = ["smoke_1", "smoke_2", "smoke_3"] as const;
 const SMOKE_FRAME_COUNT = 5;
@@ -62,19 +63,19 @@ export class CloneEffect {
     for (const folder of SMOKE_FOLDERS) {
       const frames = await Promise.all(
         Array.from({ length: SMOKE_FRAME_COUNT }, (_, index) =>
-          loadImage(`/assets/${folder}/${index + 1}.png`),
+          loadImage(publicUrl(`assets/${folder}/${index + 1}.png`)),
         ),
       );
       this.smokeFrames.set(folder, frames);
     }
-    await loadImage("/assets/state-2.png");
+    await loadImage(publicUrl("assets/state-2.png"));
     this.assetsReady = true;
   }
 
   enableSegmentation(): void {
     if (this.segmentation) return;
     const segmentation = new SelfieSegmentation({
-      locateFile: (file) => `/vendor/selfie_segmentation/${file}`,
+      locateFile: (file) => publicUrl(`vendor/selfie_segmentation/${file}`),
     });
     segmentation.setOptions({ modelSelection: 1 });
     segmentation.onResults((result) => {
@@ -100,7 +101,7 @@ export class CloneEffect {
     this.startedAt = now;
     this.spawned.fill(false);
     this.activeSmokes.length = 0;
-    this.overlay.src = "/assets/state-2.png";
+    this.overlay.src = publicUrl("assets/state-2.png");
     this.overlay.dataset.state = "2";
     return true;
   }
@@ -109,7 +110,7 @@ export class CloneEffect {
     this.startedAt = 0;
     this.spawned.fill(false);
     this.activeSmokes.length = 0;
-    this.overlay.src = "/assets/state-1.png";
+    this.overlay.src = publicUrl("assets/state-1.png");
     this.overlay.dataset.state = "1";
   }
 
